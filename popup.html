@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Jira Helper</title>
+  <style>
+    body {
+      width: 350px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 15px;
+      /* Reduced padding */
+      background-color: #f8f8fa;
+      box-sizing: border-box;
+      border-radius: 15px;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    h2 {
+      font-size: 22px;
+      margin-bottom: 15px;
+      /* Reduced margin */
+      color: #24292e;
+      text-align: center;
+      font-weight: 700;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .button-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      /* Reduced gap */
+    }
+
+    .section {
+      background-color: white;
+      border-radius: 10px;
+      padding: 10px;
+      /* Reduced padding */
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+
+    .section:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .section h3 {
+      font-size: 17px;
+      margin-bottom: 10px;
+      /* Reduced margin */
+      color: #333;
+      font-weight: 600;
+    }
+
+    button {
+      padding: 10px 15px;
+      /* Reduced padding */
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      /* Reduced font size */
+      transition: all 0.2s ease-in-out;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15);
+      /* width: 100% for full-width buttons in columns */
+    }
+
+    /* Button Group Row */
+    .button-group-row {
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+      width: 100%;
+    }
+
+    /* Specific button colors with subtle gradients */
+    button[id*="bugfix"] {
+      background: linear-gradient(to bottom, #e0534f, #d9534f);
+    }
+
+    button[id*="feature"] {
+      background: linear-gradient(to bottom, #5cb85c, #4cae4c);
+    }
+
+    button[id*="technical"] {
+      background: linear-gradient(to bottom, #f0ad4e, #ec971f);
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    button:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    }
+
+    #status {
+      margin-top: 15px;
+      /* Reduced margin */
+      font-size: 13px;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    #status.error {
+      color: #dc3545;
+    }
+
+    #status.success {
+      color: #28a745;
+    }
+
+    #copyInfoBtn {
+      background: linear-gradient(to bottom, #dbac75, #e08216);
+      white-space: nowrap;
+      /* Prevent button text from wrapping */
+    }
+
+    /* Adjust button width in the row */
+    .button-group-row button {
+      flex-grow: 1;
+      /* Allow buttons to share space equally */
+    }
+  </style>
+</head>
+
+<body>
+  <h2>Jira Helper</h2>
+  <div class="button-container">
+    <button id="copyInfoBtn">
+      Copy Info to Clipboard<br>
+      (support Jira ticket, Github PR)
+    </button>
+
+    <!-- Copy Branch Name Section -->
+    <div class="section">
+      <h3>Copy Branch Name</h3>
+      <div class="button-group-row">
+        <button id="bugfixCopyBranch">Bugfix</button>
+        <button id="featureCopyBranch">Feature</button>
+        <button id="technicalCopyBranch">Technical</button>
+      </div>
+    </div>
+
+    <!-- Copy Commit Message Section -->
+    <div class="section">
+      <h3>Copy Commit Message</h3>
+      <div class="button-group-row">
+        <button id="bugfixCopyCommit">Bugfix</button>
+        <button id="featureCopyCommit">Feature</button>
+        <button id="technicalCopyCommit">Technical</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="status"></div>
+
+  <script src="popup.js"></script>
+</body>
+
+</html>
