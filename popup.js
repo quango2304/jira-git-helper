@@ -151,6 +151,7 @@ async function handleCopyBranch(prefix) {
 }
 
 async function handleCopyCommit(prefix) {
+  const tabType = await getCurrentTabType();
   if(tabType == 'jira') {
     const jiraDetails = await getJiraDetails();
     if (jiraDetails) {
