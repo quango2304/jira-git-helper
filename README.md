@@ -33,7 +33,7 @@ A Chrome extension that helps streamline your workflow between Jira and Git by p
 
 ## Supported Pages
 
-- Jira ticket pages (URLs containing `atlassian.net/browse/`)
+- Jira ticket pages (URLs containing `atlassian.net/browse/` or `atlassian.net/issues/`)
 - GitHub Pull Request pages (URLs containing `github.com` and `/pull/`)
 
 

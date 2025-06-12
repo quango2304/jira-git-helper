@@ -35,7 +35,7 @@ async function copyToClipboard(text, hidePopup = false) {
 }
 
 function formatJiraDetails({ ticketCode, title, url }) {
-  return `${ticketCode}: ${processTitle(title, true)} ${url}`;
+  return `[${ticketCode}](${url}) - ${processTitle(title, true)}`;
 }
 
 function formatPRDetails({ title, number, url }) {
@@ -106,14 +106,16 @@ async function getPRDetails() {
 
 function extractJiraDetailsFromPage() {
   const url = window.location.href;
-  const ticketCodeMatch = url.match(/\/browse\/([A-Z]+-\d+)/);
+  const baseUrl = url.split('?')[0];
+  // Support both /browse/ and /issues/ URL patterns
+  const ticketCodeMatch = baseUrl.match(/\/(browse|issues)\/([A-Z]+-\d+)/);
   const titleElement = document.querySelector('h1[data-testid="issue.views.issue-base.foundation.summary.heading"]');
 
   if (ticketCodeMatch && titleElement) {
     return {
-      ticketCode: ticketCodeMatch[1],
+      ticketCode: ticketCodeMatch[2], // Changed from [1] to [2] since we now capture the URL type as well
       title: titleElement.textContent.trim(),
-      url,
+      url: baseUrl,
     };
   }
 
@@ -123,7 +125,7 @@ function extractJiraDetailsFromPage() {
 function extractPRDetailsFromPage() {
   const titleElement = document.querySelector('.js-issue-title');
   const prNumberElement = document.querySelector('.gh-header-title .f1-light');
-  
+
   if (!titleElement || !prNumberElement) {
     return null;
   }
@@ -169,8 +171,8 @@ async function getCurrentTabType() {
   const tab = await chrome.tabs.query({ active: true, currentWindow: true });
   const url = tab[0].url;
 
-  // Check for Jira ticket pattern
-  if (url.includes('atlassian.net/browse/')) {
+  // Check for Jira ticket pattern (supports both /browse/ and /issues/ URLs)
+  if (url.includes('atlassian.net/browse/') || url.includes('atlassian.net/issues/')) {
     return 'jira';
   }
 
